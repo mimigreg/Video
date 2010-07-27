@@ -28,7 +28,7 @@
 		</dependency>
 		<dependency>
 			<groupId>fr.michot.video</groupId>
-			<artifactId>video-jpa</artifactId>
+			<artifactId>video-business</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
