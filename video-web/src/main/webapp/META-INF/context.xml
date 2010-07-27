@@ -1,0 +1,6 @@
+<Context path="/video">
+  <Resource name="jdbc/VideoDB" auth="Container" type="javax.sql.DataSource"
+               maxActive="100" maxIdle="30" maxWait="10000"
+               username="videouser" password="videopass" driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
+               url="jdbc:derby:D:\Workspaces\DataBase\Video;create=true;shutdown=true"/>
+</Context>
