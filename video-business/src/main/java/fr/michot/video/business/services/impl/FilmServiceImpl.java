@@ -1,4 +1,4 @@
-package fr.michot.video.business.services;
+package fr.michot.video.business.services.impl;
 
 import java.util.Date;
 
@@ -17,7 +17,7 @@ import fr.michot.video.db.Registre;
 import fr.michot.video.db.Role;
 import fr.michot.video.db.Type;
 
-public class FilmService {
+public class FilmServiceImpl {
 	@PersistenceContext
 	EntityManager em;
 
@@ -31,6 +31,19 @@ public class FilmService {
 		Production aProduction = em.find(Production.class, idProduction);
 		Collection aCollection = em.find(Collection.class, idCollection);
 		return enregistrerNouveau(titre, resume, imageUrl, aProduction, aCollection);
+	}
+	
+	public Registre qualifier(int idFilm, int poids, int idType){
+		Film aFilm = em.find(Film.class, idFilm);
+		Type aType = em.find(Type.class, idType);
+		return qualifier(aFilm, poids, aType);
+	}
+	
+	public Participation ajouteParticipation(int idFilm, int idPersonne, int idRole, String precision){
+		Film aFilm = em.find(Film.class, idFilm);
+		Personne aPersonne = em.find(Personne.class, idPersonne);
+		Role aRole = em.find(Role.class, idRole);
+		return ajouteParticipation(aFilm, aPersonne, aRole, precision);
 	}
 	
 	@Transactional
