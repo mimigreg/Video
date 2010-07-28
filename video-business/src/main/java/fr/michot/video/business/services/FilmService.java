@@ -66,7 +66,7 @@ public class FilmService {
 	}
 	
 	@Transactional
-	public Participation addParticipation(Film film, Personne personne, Role role, String precision) {
+	public Participation ajouteParticipation(Film film, Personne personne, Role role, String precision) {
 		Participation aParticipation = new Participation();
 		aParticipation.setFilm(film);
 		aParticipation.setPersonne(personne);
