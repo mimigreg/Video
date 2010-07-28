@@ -16,7 +16,7 @@ public class Type implements Serializable {
 	@Id
 	private int id;
 
-	@Column(name="LIBELLE", length=100)
+	@Column(name = "LIBELLE", length = 100)
 	private String libelle;
 
 	public int getId() {

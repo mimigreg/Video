@@ -24,29 +24,29 @@ public class Film implements Serializable {
 	@Id
 	private int id;
 
-	@Column(name = "IMAGEURL",length=255)
+	@Column(name = "IMAGEURL", length = 255)
 	private String imageUrl;
 
-	@Column(name="NOTE")
+	@Column(name = "NOTE")
 	private int note;
 
 	@ManyToOne
 	private Production production;
 
-	@Column(name ="RESUME",length=4000)
+	@Column(name = "RESUME", length = 4000)
 	private String resume;
 
-	@Column(name = "TITRE", length=100)
+	@Column(name = "TITRE", length = 100)
 	private String titre;
 
 	public Film() {
 		super();
 	}
-	
+
 	public Collection getCollection() {
 		return collection;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -58,7 +58,7 @@ public class Film implements Serializable {
 	public int getNote() {
 		return note;
 	}
-	
+
 	public Production getProduction() {
 		return production;
 	}
@@ -78,7 +78,7 @@ public class Film implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}

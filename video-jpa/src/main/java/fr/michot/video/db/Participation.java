@@ -23,7 +23,7 @@ public class Participation implements Serializable {
 	@ManyToOne
 	private Personne personne;
 
-	@Column(name = "PRECISION",length=200)
+	@Column(name = "PRECISION", length = 200)
 	private String precision;
 
 	@ManyToOne

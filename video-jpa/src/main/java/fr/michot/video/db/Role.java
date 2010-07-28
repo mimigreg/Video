@@ -16,7 +16,7 @@ public class Role implements Serializable {
 	@Id
 	private int id;
 
-	@Column(name="NOM",length=100)
+	@Column(name = "NOM", length = 100)
 	private String nom;
 
 	public int getId() {

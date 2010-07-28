@@ -15,7 +15,7 @@ public class Collection implements Serializable {
 	@Id
 	private int id;
 
-	@Column(name = "TITRE", length=100)
+	@Column(name = "TITRE", length = 100)
 	private String titre;
 
 	public int getId() {

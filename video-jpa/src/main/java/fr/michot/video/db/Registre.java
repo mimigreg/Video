@@ -48,11 +48,11 @@ public class Registre implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public void setPoids(int poids) {
 		this.poids = poids;
 	}
-	
+
 	public void setType(Type type) {
 		this.type = type;
 	}

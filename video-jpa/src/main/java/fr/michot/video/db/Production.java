@@ -16,11 +16,18 @@ public class Production implements Serializable {
 	@Id
 	private int id;
 
-	@Column(name="NOM", length=100)
+	@Column(name = "LOGOURL", length = 255)
+	private String logoUrl;
+
+	@Column(name = "NOM", length = 100)
 	private String nom;
 
 	public int getId() {
 		return id;
+	}
+
+	public String getLogoUrl() {
+		return logoUrl;
 	}
 
 	public String getNom() {
@@ -29,6 +36,10 @@ public class Production implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public void setLogoUrl(String logoUrl) {
+		this.logoUrl = logoUrl;
 	}
 
 	public void setNom(String nom) {

@@ -16,13 +16,13 @@ public class Emprunt implements Serializable {
 
 	@Column(name = "DATE")
 	private Date date;
-	
+
 	@ManyToOne
 	private Film film;
 
 	@Id
 	private int id;
-	
+
 	@ManyToOne
 	private Personne personne;
 
