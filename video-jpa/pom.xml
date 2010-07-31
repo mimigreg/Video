@@ -10,4 +10,39 @@
 	<artifactId>video-jpa</artifactId>
 	<name>Video-Jpa</name>
 	<description>Le modèle de données du projet</description>
+	<properties>
+		<hibernate.version>3.5.3-Final</hibernate.version>
+	</properties>
+	<dependencies>
+		<!-- ++++++ BEGIN - HIBERNATE ++++++ -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>asm</groupId>
+			<artifactId>asm</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+
+		<!-- ++++++ END - HIBERNATE ++++++ -->
+
+	</dependencies>
+
 </project>

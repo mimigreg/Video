@@ -9,28 +9,28 @@ import javax.persistence.Query;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.michot.video.constantes.Role;
 import fr.michot.video.db.Film;
 import fr.michot.video.db.Personne;
-import fr.michot.video.db.Role;
 
 public class PersonneServiceImpl {
 	@PersistenceContext
 	EntityManager em;
 
-	public void effacePersonne(int idPersonne) {
+	public void efface(int idPersonne) {
 		Personne aPersonne = em.find(Personne.class, idPersonne);
-		effacePersonne(aPersonne);
+		efface(aPersonne);
 	}
 
-	public Personne modifiePersonne(int idPersonne, String nom, String prenom,
+	public Personne modifie(int idPersonne, String nom, String prenom,
 			Boolean homme, Boolean prive, String photoUrl, String annotations) {
 		Personne aPersonne = em.find(Personne.class, idPersonne);
-		return modifiePersonne(aPersonne, nom, prenom, homme, prive, photoUrl,
+		return modifie(aPersonne, nom, prenom, homme, prive, photoUrl,
 				annotations);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Personne> recherchePersonne(String nom, String prenom, Boolean homme, Boolean prive) {
+	public List<Personne> recherche(String nom, String prenom, Boolean homme, Boolean prive) {
 		boolean wherePresent = false;
 		StringWriter qlStringWriter = new StringWriter();
 		qlStringWriter.write("SELECT pers FROM Personne pers");
@@ -48,32 +48,28 @@ public class PersonneServiceImpl {
 		return uneRequete.setMaxResults(50).getResultList();
 	}
 	
-	public List<Personne> recherchePersonneParFilm(int idFilm) {
-		return recherchePersonne(em.find(Film.class, idFilm));
-	}
-	
-	public List<Personne> recherchePersonneParRole(int idRole) {
-		return recherchePersonne(em.find(Role.class, idRole));
+	public List<Personne> rechercheParFilm(int idFilm) {
+		return recherche(em.find(Film.class, idFilm));
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Personne> recherchePersonne(Film aFilm) {
-		if(aFilm==null) return recherchePersonne(null, null, null, null);
+	public List<Personne> recherche(Film aFilm) {
+		if(aFilm==null) return recherche(null, null, null, null);
 		Query uneRequete = em.createQuery("SELECT pers FROM Personne pers, Participation part WHERE pers = part.personne and part.film = :film");
 		uneRequete.setParameter("film", aFilm);
 		return uneRequete.setMaxResults(50).getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Personne> recherchePersonne(Role aRole) {
-		if(aRole==null) return recherchePersonne(null, null, null, null);
+	public List<Personne> recherche(Role aRole) {
+		if(aRole==null) return recherche(null, null, null, null);
 		Query uneRequete = em.createQuery("SELECT pers FROM Personne pers, Participation part WHERE pers = part.personne and part.role = :role");
 		uneRequete.setParameter("role", aRole);
 		return uneRequete.setMaxResults(50).getResultList();
 	}
 	
 	@Transactional
-	public Personne ajoutePersonne(String nom, String prenom, Boolean homme,
+	public Personne ajoute(String nom, String prenom, Boolean homme,
 			Boolean prive, String photoUrl, String annotations) {
 		Personne aPersonne = new Personne();
 		aPersonne.setNom(nom);
@@ -87,7 +83,7 @@ public class PersonneServiceImpl {
 	}
 
 	@Transactional
-	public Personne modifiePersonne(Personne aPersonne, String nom,
+	public Personne modifie(Personne aPersonne, String nom,
 			String prenom, Boolean homme, Boolean prive, String photoUrl,
 			String annotations) {
 		if (aPersonne == null)
@@ -111,7 +107,7 @@ public class PersonneServiceImpl {
 	}
 
 	@Transactional
-	public void effacePersonne(Personne personne) {
+	public void efface(Personne personne) {
 		em.remove(personne);
 	}
 

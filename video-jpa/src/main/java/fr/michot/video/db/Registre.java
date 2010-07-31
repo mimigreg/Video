@@ -4,9 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import fr.michot.video.constantes.Type;
 
 @Entity
 @Table(name = "REGISTRE")
@@ -17,12 +23,14 @@ public class Registre implements Serializable {
 	private Film film;
 
 	@Id
+    @GeneratedValue(generator = "registre_seq")
+    @SequenceGenerator(sequenceName="registre_sequence", name="registre_seq")
 	private int id;
 
 	@Column(name = "POIDS")
 	private int poids;
 
-	@ManyToOne
+	@Enumerated(EnumType.STRING)
 	private Type type;
 
 	public Film getFilm() {

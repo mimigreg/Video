@@ -5,8 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +23,8 @@ public class Emprunt implements Serializable {
 	private Film film;
 
 	@Id
+    @GeneratedValue(generator = "emprunt_seq")
+    @SequenceGenerator(sequenceName="emprunt_sequence", name="emprunt_seq")
 	private int id;
 
 	@ManyToOne

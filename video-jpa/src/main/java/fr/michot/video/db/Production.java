@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -14,6 +16,8 @@ public class Production implements Serializable {
 	private static final long serialVersionUID = 7982565164429271186L;
 
 	@Id
+    @GeneratedValue(generator = "production_seq")
+    @SequenceGenerator(sequenceName="production_sequence", name="production_seq")
 	private int id;
 
 	@Column(name = "LOGOURL", length = 255)

@@ -4,9 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import fr.michot.video.constantes.Role;
 
 @Entity
 @Table(name = "PARTICIPATION")
@@ -18,6 +24,8 @@ public class Participation implements Serializable {
 	private Film film;
 
 	@Id
+    @GeneratedValue(generator = "participation_seq")
+    @SequenceGenerator(sequenceName="participation_sequence", name="participation_seq")
 	private int id;
 
 	@ManyToOne
@@ -26,7 +34,7 @@ public class Participation implements Serializable {
 	@Column(name = "PRECISION", length = 200)
 	private String precision;
 
-	@ManyToOne
+	@Enumerated(EnumType.STRING)
 	private Role role;
 
 	public Film getFilm() {

@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +22,8 @@ public class Personne implements Serializable {
 	private Boolean homme;
 
 	@Id
+    @GeneratedValue(generator = "personne_seq")
+    @SequenceGenerator(sequenceName="personne_sequence", name="personne_seq")
 	private int id;
 
 	@Column(name = "NOM", length = 100)

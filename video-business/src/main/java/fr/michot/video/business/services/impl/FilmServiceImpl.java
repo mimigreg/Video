@@ -7,15 +7,13 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.michot.video.constantes.Type;
 import fr.michot.video.db.Collection;
 import fr.michot.video.db.Emprunt;
 import fr.michot.video.db.Film;
-import fr.michot.video.db.Participation;
 import fr.michot.video.db.Personne;
 import fr.michot.video.db.Production;
 import fr.michot.video.db.Registre;
-import fr.michot.video.db.Role;
-import fr.michot.video.db.Type;
 
 public class FilmServiceImpl {
 	@PersistenceContext
@@ -33,17 +31,9 @@ public class FilmServiceImpl {
 		return enregistrerNouveau(titre, resume, imageUrl, aProduction, aCollection);
 	}
 	
-	public Registre qualifier(int idFilm, int poids, int idType){
+	public Registre ajoutQualificatif(int idFilm, int poids, Type type){
 		Film aFilm = em.find(Film.class, idFilm);
-		Type aType = em.find(Type.class, idType);
-		return qualifier(aFilm, poids, aType);
-	}
-	
-	public Participation ajouteParticipation(int idFilm, int idPersonne, int idRole, String precision){
-		Film aFilm = em.find(Film.class, idFilm);
-		Personne aPersonne = em.find(Personne.class, idPersonne);
-		Role aRole = em.find(Role.class, idRole);
-		return ajouteParticipation(aFilm, aPersonne, aRole, precision);
+		return ajoutQualificatif(aFilm, poids, type);
 	}
 	
 	@Transactional
@@ -69,23 +59,12 @@ public class FilmServiceImpl {
 	}
 	
 	@Transactional
-	public Registre qualifier(Film film, int poids, Type type) {
+	public Registre ajoutQualificatif(Film film, int poids, Type type) {
 		Registre aRegistre = new Registre();
 		aRegistre.setFilm(film);
 		aRegistre.setPoids(poids);
 		aRegistre.setType(type);
 		em.persist(aRegistre);
 		return aRegistre;
-	}
-	
-	@Transactional
-	public Participation ajouteParticipation(Film film, Personne personne, Role role, String precision) {
-		Participation aParticipation = new Participation();
-		aParticipation.setFilm(film);
-		aParticipation.setPersonne(personne);
-		aParticipation.setRole(role);
-		aParticipation.setPrecision(precision);
-		em.persist(aParticipation);
-		return aParticipation;
 	}
 }

@@ -11,7 +11,5 @@
 		<class>fr.michot.video.db.Personne</class>
 		<class>fr.michot.video.db.Production</class>
 		<class>fr.michot.video.db.Registre</class>
-		<class>fr.michot.video.db.Role</class>
-		<class>fr.michot.video.db.Type</class>
 	</persistence-unit>
 </persistence>

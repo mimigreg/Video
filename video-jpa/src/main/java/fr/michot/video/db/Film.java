@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -22,6 +24,8 @@ public class Film implements Serializable {
 	private Collection collection;
 
 	@Id
+    @GeneratedValue(generator = "film_seq")
+    @SequenceGenerator(sequenceName="film_sequence", name="film_seq")
 	private int id;
 
 	@Column(name = "IMAGEURL", length = 255)
