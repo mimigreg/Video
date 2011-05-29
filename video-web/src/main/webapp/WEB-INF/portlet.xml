@@ -1,0 +1,46 @@
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd 
+                                         http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	version="2.0">
+
+	<portlet>
+		<description>Portlet de detail d'une personne</description>
+		<portlet-name>PersonnePortlet</portlet-name>
+		<display-name>Personne</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>config</portlet-mode>
+			<portlet-mode>edit</portlet-mode>
+			<portlet-mode>help</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>fr</supported-locale>
+		<portlet-info>
+			<title>Personne</title>
+			<short-title>PersonnePortlet</short-title>
+			<keywords>personne</keywords>
+		</portlet-info>
+	</portlet>
+	<portlet>
+		<description>Portlet de liste de personnes</description>
+		<portlet-name>ListePersonnePortlet</portlet-name>
+		<display-name>Liste des personnes</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>config</portlet-mode>
+			<portlet-mode>edit</portlet-mode>
+			<portlet-mode>help</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>fr</supported-locale>
+		<portlet-info>
+			<title>Liste des Personnes</title>
+			<short-title>ListePersonnePortlet</short-title>
+			<keywords>Liste personnes</keywords>
+		</portlet-info>
+	</portlet>
+
+</portlet-app>

@@ -9,8 +9,8 @@
 	<description>Application de gestion de video</description>
 
 	<properties>
-		<spring.version>3.0.3.RELEASE</spring.version>
-		<spring-security.version>3.0.3.RELEASE</spring-security.version>
+		<spring.version>3.0.5.RELEASE</spring.version>
+		<spring-security.version>3.0.5.RELEASE</spring-security.version>
 		<aspectj.version>1.6.8</aspectj.version>
 	</properties>
 

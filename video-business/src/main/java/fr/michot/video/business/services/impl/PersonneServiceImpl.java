@@ -22,6 +22,10 @@ public class PersonneServiceImpl {
 		efface(aPersonne);
 	}
 
+	public Personne rechercheParId(int idPersonne) {
+		return em.find(Personne.class, idPersonne);
+	}
+	
 	public Personne modifie(int idPersonne, String nom, String prenom,
 			Boolean homme, Boolean prive, String photoUrl, String annotations) {
 		Personne aPersonne = em.find(Personne.class, idPersonne);
@@ -31,13 +35,13 @@ public class PersonneServiceImpl {
 
 	@SuppressWarnings("unchecked")
 	public List<Personne> recherche(String nom, String prenom, Boolean homme, Boolean prive) {
-		boolean wherePresent = false;
+		boolean whereAbsent = true;
 		StringWriter qlStringWriter = new StringWriter();
 		qlStringWriter.write("SELECT pers FROM Personne pers");
-		if(nom !=null) qlStringWriter.write(wherePresent?" WHERE ":" "+"pers.nom LIKE :nom%");
-		if(prenom !=null) qlStringWriter.write(wherePresent?" WHERE ":" AND "+"pers.prenom LIKE :prenom%");
-		if(homme !=null) qlStringWriter.write(wherePresent?" WHERE ":" AND "+"pers.homme = :homme");
-		if(prive !=null) qlStringWriter.write(wherePresent?" WHERE ":" AND "+"pers.prive = :prive");
+		if(nom !=null) {qlStringWriter.write(" WHERE pers.nom LIKE :nom%");whereAbsent=false;}
+		if(prenom !=null) {qlStringWriter.write(whereAbsent?" WHERE ":" AND "+"pers.prenom LIKE :prenom%");whereAbsent=false;}
+		if(homme !=null) {qlStringWriter.write(whereAbsent?" WHERE ":" AND "+"pers.homme = :homme");whereAbsent=false;}
+		if(prive !=null) {qlStringWriter.write(whereAbsent?" WHERE ":" AND "+"pers.prive = :prive");whereAbsent=false;}
 		qlStringWriter.write(" ORDER BY pers.nom ascending");
 		
 		Query uneRequete = em.createQuery(qlStringWriter.toString());
