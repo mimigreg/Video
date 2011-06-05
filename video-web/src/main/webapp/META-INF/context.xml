@@ -2,5 +2,5 @@
 	<Resource name="jdbc/VideoDB" auth="Container" type="javax.sql.DataSource"
 		maxActive="100" maxIdle="30" maxWait="10000" username="videouser"
 		password="videopass" driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
-		url="jdbc:derby:/home/gregory/Travail/DataBase/Video;create=true;shutdown=true" />
+		url="jdbc:derby:/home/gregory/Travail/DataBase/Video;create=true" />
 </Context>

@@ -4,13 +4,12 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.portlet.ActionResponse;
-import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.PortletException;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,41 +37,35 @@ public class PersonneViewHandler {
 	}
 
 	@RequestMapping
-	// default (action=detail)
-	public String showListePersonne(Model model) {// ,
-													// @RequestParam("personneId")
-													// String personneId) {
-
-		// if (personneId != null) {
-		// personne = service.rechercheParId(Integer.parseInt(personneId));
-		// }
-		if (personne != null) {
+	public String showPersonne(Model model) {
+		if (personne == null) {
+			return "/viewEmpty";
+		} else {
 			model.addAttribute("personne", personne);
 			return "/view";
-		} else {
-			return "/viewEmpty";
 		}
 	}
-
-	@RequestMapping(params = "action=search")
-	public void processActionSearch(@RequestParam("personneId") int personneId, ActionResponse aResponse) {
-		this.personne = service.rechercheParId(personneId);
-		aResponse.setRenderParameter("action", "detail");
-	}
-
-	@RequestMapping(params = "action=save")
-	public void processActionSave(@ModelAttribute("personne") Personne personne, BindingResult result, SessionStatus status, ActionResponse response) {
-		// new PersonneValidator().validate(personne, result);
-		if (!result.hasErrors()) {
-			status.setComplete();
-			response.setRenderParameter("action", "detail");
+	
+	@RequestMapping(params = "action=add")
+	public String showPersonneForm(Model model) {
+		// Used for the initial form as well as for redisplaying with errors.
+		if (!model.containsAttribute("personne")) {
+			model.addAttribute("personne", new Personne());
 		}
+		return "/edit";
 	}
 
-	@RequestMapping(params = "event=personneId")
-	public void processEventPersonneId(@RequestParam("personneId") int personneId, EventResponse eResponse) throws PortletException, IOException {
+	@RequestMapping(params = "action=add")
+	public void populatePersonne(@Valid @ModelAttribute("personne") Personne personne, SessionStatus status, ActionResponse response) {
+		//this.personne = service.ajoute(personne.getNom(), personne.getPrenom(), personne.isHomme(), personne.isPrive(), personne.getPhotoUrl(), personne.getAnnotations());
+		status.setComplete();
+		response.setRenderParameter("action", "view");
+	}
+
+	@RequestMapping(params = "event=idPersonne")
+	public void processEventPersonneId(@RequestParam("idPersonne") int personneId, EventResponse eResponse) throws PortletException, IOException {
 		personne = service.rechercheParId(personneId);
-		//model.addAttribute("personne", personne);
+		eResponse.setRenderParameter("action", "detail");
 	}
 
 }

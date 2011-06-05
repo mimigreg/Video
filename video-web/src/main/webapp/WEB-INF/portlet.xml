@@ -22,6 +22,10 @@
 			<short-title>PersonnePortlet</short-title>
 			<keywords>personne</keywords>
 		</portlet-info>
+		<supported-processing-event>
+            <qname>idPersonne</qname>
+        </supported-processing-event>
+		
 	</portlet>
 	<portlet>
 		<description>Portlet de liste de personnes</description>
@@ -41,6 +45,16 @@
 			<short-title>ListePersonnePortlet</short-title>
 			<keywords>Liste personnes</keywords>
 		</portlet-info>
+		<supported-publishing-event>
+             <qname>idPersonne</qname>
+        </supported-publishing-event>
 	</portlet>
+	
+    <event-definition> 
+        <qname>idPersonne</qname>
+    </event-definition>
+    <event-definition> 
+        <qname>idFilm</qname>
+    </event-definition>
 
 </portlet-app>
