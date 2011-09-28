@@ -1,14 +1,11 @@
 package fr.michot.video.ihm.portlet.personne;
 
 import javax.inject.Inject;
-import javax.portlet.ActionResponse;
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.support.SessionStatus;
 
 import fr.michot.video.business.services.impl.PersonneServiceImpl;
 import fr.michot.video.db.Personne;

@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.portlet.ActionResponse;
+import javax.portlet.Event;
+import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.PortletException;
 import javax.validation.Valid;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.portlet.bind.annotation.EventMapping;
 
 import fr.michot.video.business.services.impl.PersonneServiceImpl;
 import fr.michot.video.db.Personne;
@@ -48,7 +51,6 @@ public class PersonneViewHandler {
 	
 	@RequestMapping(params = "action=add")
 	public String showPersonneForm(Model model) {
-		// Used for the initial form as well as for redisplaying with errors.
 		if (!model.containsAttribute("personne")) {
 			model.addAttribute("personne", new Personne());
 		}
@@ -62,8 +64,10 @@ public class PersonneViewHandler {
 		response.setRenderParameter("action", "view");
 	}
 
-	@RequestMapping(params = "event=idPersonne")
-	public void processEventPersonneId(@RequestParam("idPersonne") int personneId, EventResponse eResponse) throws PortletException, IOException {
+	@EventMapping("idPersonne")
+	public void processEventPersonneId(EventRequest eRequest, EventResponse eResponse) throws PortletException, IOException {
+		Event event = eRequest.getEvent();
+		int personneId = Integer.parseInt((String) event.getValue());
 		personne = service.rechercheParId(personneId);
 		eResponse.setRenderParameter("action", "detail");
 	}
