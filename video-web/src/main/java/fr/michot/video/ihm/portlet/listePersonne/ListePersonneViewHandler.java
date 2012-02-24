@@ -1,5 +1,6 @@
 package fr.michot.video.ihm.portlet.listePersonne;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,28 +27,15 @@ public class ListePersonneViewHandler {
 	@Inject
 	PersonneServiceImpl service;
  
-	RecherchePersonneFormBean recherchePersonneFormBean = null;
-	
-	private List<Personne> listePersonnes = null;
-
-	public void setListePersonnes(List<Personne> listePersonnes) {
-		this.listePersonnes = listePersonnes;
-	}
-
-	@ModelAttribute("listePersonnes")
-	public List<Personne> getListePersonnes() {
-		return this.listePersonnes;
-	}
-
 	@RequestMapping
 	// default (action=list)
-	public String showListePersonne(Model model) {
-		if(recherchePersonneFormBean==null) {
-			recherchePersonneFormBean = new RecherchePersonneFormBean();
-		}
-		model.addAttribute("recherchePersonneFormBean", recherchePersonneFormBean);
+	public String showListePersonne(Model model, @ModelAttribute("recherchePersonneFormBean") RecherchePersonneFormBean recherchePersonneFormBean,@ModelAttribute ArrayList<Personne>listePersonnes) {
+		
+//		if(recherchePersonneFormBean==null) {
+//			recherchePersonneFormBean = new RecherchePersonneFormBean();
+//		}
+
 		if (listePersonnes != null && !listePersonnes.isEmpty()) {
-			model.addAttribute("listePersonne", listePersonnes);
 			return "/view";
 		} else {
 			return "/viewEmpty";
@@ -55,26 +43,25 @@ public class ListePersonneViewHandler {
 	}
 
 	@RequestMapping(params = "action=search")
-	public void populatePersonne(@ModelAttribute("recherchePersonneFormBean") @Valid RecherchePersonneFormBean recherchePersonneFormBean,BindingResult result, SessionStatus status, ActionResponse response) {
+	public void populatePersonne(@ModelAttribute("recherchePersonneFormBean") @Valid RecherchePersonneFormBean recherchePersonneFormBean,BindingResult result, SessionStatus status, Model model,ActionResponse response) {
 		System.out.println(result.hasErrors());
 		System.out.println(recherchePersonneFormBean);
-		
-		
+		List<Personne>listePersonnes;
 		if(recherchePersonneFormBean.isRechercheAvancee()) {
 			listePersonnes = service.recherche(recherchePersonneFormBean.getNom(), recherchePersonneFormBean.getPrenom(), recherchePersonneFormBean.getHomme(), recherchePersonneFormBean.getPrive());
 		} else {
 			// TODO coder une recherche champs libre
 			listePersonnes = service.recherche(recherchePersonneFormBean.getNom(), recherchePersonneFormBean.getPrenom(), recherchePersonneFormBean.getHomme(), recherchePersonneFormBean.getPrive());
 		}
-		
+		model.addAttribute(listePersonnes);
 		status.setComplete();
 		response.setRenderParameter("action", "list");
 	}
 
 	@RequestMapping(params = "action=delete")
-	public void removePersonne(@RequestParam("idPersonne") int idPersonne, ActionResponse response) {
+	public void removePersonne(@RequestParam("idPersonne") int idPersonne, @ModelAttribute List<Personne>listePersonnes,ActionResponse response) {
 		service.efface(idPersonne);
-		this.listePersonnes.remove(idPersonne);
+		listePersonnes.remove(idPersonne);
 		response.setRenderParameter("action", "list");
 	}
 	
