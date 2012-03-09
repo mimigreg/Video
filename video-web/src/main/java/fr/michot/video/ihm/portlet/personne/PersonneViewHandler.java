@@ -12,64 +12,91 @@ import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.EventMapping;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 import fr.michot.video.business.services.impl.PersonneServiceImpl;
 import fr.michot.video.db.Personne;
 
 @Controller
 @RequestMapping("VIEW")
+@SessionAttributes({ "personne" })
 public class PersonneViewHandler {
 
 	@Inject
 	PersonneServiceImpl service;
 
-	private Personne personne = null;
-
-	public void setPersonne(Personne personne) {
-		this.personne = personne;
-	}
-
 	@ModelAttribute("personne")
-	public Personne getPersonne() {
-		return this.personne;
+	public PersonneViewModel getPersonneVM() {
+		return new PersonneViewModel();
 	}
 
-	@RequestMapping
+	@RenderMapping
 	public String showPersonne(Model model) {
-		if (personne == null) {
-			return "/viewEmpty";
-		} else {
-			model.addAttribute("personne", personne);
-			return "/view";
-		}
-	}
-	
-	@RequestMapping(params = "action=add")
-	public String showPersonneForm(Model model) {
-		if (!model.containsAttribute("personne")) {
-			model.addAttribute("personne", new Personne());
-		}
-		return "/edit";
+		return "/view";
 	}
 
-	@RequestMapping(params = "action=add")
-	public void populatePersonne(@Valid @ModelAttribute("personne") Personne personne, SessionStatus status, ActionResponse response) {
-		//this.personne = service.ajoute(personne.getNom(), personne.getPrenom(), personne.isHomme(), personne.isPrive(), personne.getPhotoUrl(), personne.getAnnotations());
+	@ActionMapping("switchMode")
+	public void switchMode(
+			@ModelAttribute("personne") PersonneViewModel personne,
+			SessionStatus status, Model model, ActionResponse response) {
+		personne.setEditMode(!personne.isEditMode());
+		model.addAttribute("personne", personne);
+		response.setRenderParameter("action", "list");
+	}
+
+	@ActionMapping("newPersonne")
+	public void nouvellePersonne(
+			SessionStatus status, Model model, ActionResponse response) {
 		status.setComplete();
-		response.setRenderParameter("action", "view");
+		PersonneViewModel personne = new PersonneViewModel();
+		personne.setEditMode(true);
+		model.addAttribute("personne", personne);
+		response.setRenderParameter("action", "list");
+	}
+
+	@ActionMapping("save")
+	public void populatePersonne(
+			@Valid @ModelAttribute("personne") PersonneViewModel personne,
+			BindingResult result, SessionStatus status, Model model,
+			ActionResponse response) {
+		Personne personneDb;
+		if (personne.getId() > 0) {
+			personneDb = service.modifie(personne.getId(), personne.getNom(),
+					personne.getPrenom(), personne.getHomme(),
+					personne.getPrive(), personne.getPhotoUrl(),
+					personne.getAnnotations());
+		} else {
+			personneDb = service.ajoute(personne.getNom(), personne.getPrenom(),
+					personne.getHomme(), personne.getPrive(),
+					personne.getPhotoUrl(), personne.getAnnotations());
+		}
+		personne.setId(personneDb.getId());
+		personne.setEditMode(false);
+		status.setComplete();
+		response.setRenderParameter("action", "list");
 	}
 
 	@EventMapping("idPersonne")
-	public void processEventPersonneId(EventRequest eRequest, EventResponse eResponse) throws PortletException, IOException {
+	public void processEventPersonneId(EventRequest eRequest,
+			EventResponse eResponse, Model model) throws PortletException,
+			IOException {
 		Event event = eRequest.getEvent();
-		int personneId = Integer.parseInt((String) event.getValue());
-		personne = service.rechercheParId(personneId);
-		eResponse.setRenderParameter("action", "detail");
+		int personneId = ((Integer) event.getValue()).intValue();
+		Personne personne = service.rechercheParId(personneId);
+		if (personne != null)
+			model.addAttribute(
+					"personne",
+					new PersonneViewModel(personne.getId(),personne.getNom(), personne
+							.getPhotoUrl(), personne.getPrenom(), personne
+							.getPrive(), personne.getHomme(), personne
+							.getAnnotations(), false));
 	}
 
 }

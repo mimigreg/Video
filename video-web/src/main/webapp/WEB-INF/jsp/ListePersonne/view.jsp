@@ -1,7 +1,8 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <portlet:defineObjects />
-<portlet:actionURL var="myActionURL" />
 
 <div class="portlet-section-header">Liste des personnes</div>
 
@@ -10,21 +11,25 @@
 		<tr class="portlet-table-header">
 			<td>Nom</td>
 			<td>Prénom</td>
+			<td>X</td>
 		</tr>
-		<c:forEach items="${listePersonnes}" var="personne">
-		<%
-		boolean unSurDeux = false;
-			String styleLigne = unSurDeux?"portlet-table-body":"portlet-table-alternate";
-			unSurDeux=!unSurDeux;
-		%>
-		<tr class="<%=styleLigne%>" onmouseover="class:portlet-table-selected">
-			<td>${personne.nom} ${personne.prenom}</td>
-		</tr>
-		</c:forEach>
+		<%boolean unSurDeux = true; %>
+		<c:if test="${listePersonnes!=null}">
+			<c:forEach items="${listePersonnes}" var="personne">
+				<%
+					String styleLigne = unSurDeux?"portlet-table-body":"portlet-table-alternate";
+					unSurDeux=!unSurDeux;
+				%>
+				<tr class="<%=styleLigne%>" onmouseover="this.className='portlet-table-selected'" onmouseout="this.className='<%=styleLigne%>'" onclick="document.location.href='<portlet:actionURL name='select'><portlet:param name='idPersonne' value='${personne.id}'/></portlet:actionURL>'">
+					<td>${personne.nom}</td><td>${personne.prenom}</td><td><a href="<portlet:actionURL name='delete'><portlet:param name='idPersonne' value='${personne.id}'/></portlet:actionURL>">X</a></td>
+				</tr>
+			</c:forEach>
+		</c:if>
 	</table>
 	<div class="portlet-font">
-		<form:form  action="<%=myActionURL%>" method="POST" modelAttribute="recherchePersonneFormBean">
-			Rechercher par nom : <input type="hidden" name="action" value="search" />
+		<portlet:actionURL var="searchURL" name="search"/>
+		<form:form  action="${searchURL}" method="POST" modelAttribute="recherchePersonneFormBean">
+			Rechercher : 
 			<span class="portlet-form-field-label">Recherche avancée : Oui</span>
 				<form:radiobutton class="portlet-form-input-field" path="rechercheAvancee" value="true" />
 			<span class="portlet-form-field-label">Non</span>

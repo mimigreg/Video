@@ -11,9 +11,6 @@
 		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
 		<supports>
 			<mime-type>text/html</mime-type>
-			<portlet-mode>config</portlet-mode>
-			<portlet-mode>edit</portlet-mode>
-			<portlet-mode>help</portlet-mode>
 		</supports>
 		<supported-locale>en</supported-locale>
 		<supported-locale>fr</supported-locale>
@@ -34,9 +31,6 @@
 		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
 		<supports>
 			<mime-type>text/html</mime-type>
-			<portlet-mode>config</portlet-mode>
-			<portlet-mode>edit</portlet-mode>
-			<portlet-mode>help</portlet-mode>
 		</supports>
 		<supported-locale>en</supported-locale>
 		<supported-locale>fr</supported-locale>

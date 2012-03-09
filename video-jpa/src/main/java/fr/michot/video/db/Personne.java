@@ -58,11 +58,11 @@ public class Personne implements Serializable {
 		return prenom;
 	}
 
-	public Boolean isHomme() {
+	public Boolean getHomme() {
 		return homme;
 	}
 
-	public Boolean isPrive() {
+	public Boolean getPrive() {
 		return prive;
 	}
 

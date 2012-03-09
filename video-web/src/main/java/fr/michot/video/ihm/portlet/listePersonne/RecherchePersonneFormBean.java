@@ -2,7 +2,7 @@ package fr.michot.video.ihm.portlet.listePersonne;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 
 public class RecherchePersonneFormBean implements Serializable {
 
@@ -13,10 +13,10 @@ public class RecherchePersonneFormBean implements Serializable {
 
 	private boolean rechercheAvancee=false;
 	
-	@Max(100)
+	@Size(max=100)
 	private String nom;
 	
-	@Max(100)
+	@Size(max=100)
 	private String prenom;
 	
 	private Boolean homme;
