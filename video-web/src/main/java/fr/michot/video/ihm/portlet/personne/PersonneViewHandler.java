@@ -79,7 +79,7 @@ public class PersonneViewHandler {
 		}
 		personne.setId(personneDb.getId());
 		personne.setEditMode(false);
-		status.setComplete();
+//		status.setComplete();
 		response.setRenderParameter("action", "list");
 	}
 
